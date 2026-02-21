@@ -458,10 +458,36 @@
             </div>
             <!-- ======= end accordion ======= -->
 
-            <div style="display:flex;gap:12px;margin-top:14px;align-items:center">
-              <a class="btn btn-primary" href="#https://drive.google.com/uc?export=download&id=1zRVMkRWtwE23IF-5nxJxNX1Hk_yQ3st0" id="enrollBtn1">Download Brochure</a>
-              <button class="btn btn-secondary" id="advisorBtn">Talk to an Advisor</button>
-            </div>
+           <div class="cta-row">
+  <a
+    class="btn btn-primary"
+    href="https://drive.google.com/uc?export=download&id=1zRVMkRWtwE23IF-5nxJxNX1Hk_yQ3st0"
+    id="enrollBtn1"
+    download
+    aria-label="Download the course brochure"
+  >
+    📄 Download Brochure
+  </a>
+
+  <button
+    class="btn btn-secondary"
+    id="advisorBtn"
+    type="button"
+    aria-label="Talk to an advisor"
+  >
+    💬 Talk to an Advisor
+  </button>
+</div>
+
+<style>
+  .cta-row{
+    display:flex;
+    gap:12px;
+    margin-top:16px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+</style>
           </div>
 
           <aside>
