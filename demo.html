@@ -4,424 +4,366 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>AI &amp; Machine Learning — Demo Class | Skillbotix</title>
-  <meta name="description" content="Free demo class: 25–30 hours, hands-on AI & ML — build 10+ projects, deployable apps, and an Agentic AI capstone." />
-  <link rel="canonical" href="https://yourdomain.example/demo-ai-ml" />
+  <meta name="description" content="Demo: 1 hour. Career program: job-focused, mentor-led AI & ML with projects, internship & placement support." />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --primary:#4f46e5;
-      --primary-600:#4338ca;
-      --bg:#f5f7fb;
-      --card:#ffffff;
-      --text:#121417;
-      --muted:#6b7280;
-      --success:#16a34a;
-      --radius:14px;
-      --container:1200px;
-      --glass: rgba(255,255,255,0.6);
+      --primary: #23318a; /* more professional navy */
+      --primary-600: #1b2566;
+      --accent: #eef3ff;
+      --bg: #fbfcfe;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --text: #0f1724;
+      --success: #0f9d58;
+      --radius: 12px;
+      --container: 1180px;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
       background:var(--bg);
       color:var(--text);
       -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
       line-height:1.45;
-    }
-
-    /* animated gradient background for hero */
-    .hero-bg {
-      background: linear-gradient(120deg, rgba(79,70,229,0.06), rgba(6,182,212,0.03) 30%, rgba(99,102,241,0.02));
-      background-size: 300% 300%;
-      animation: gradientShift 12s ease infinite;
-    }
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      -webkit-text-size-adjust:100%;
     }
 
     .container{max-width:var(--container);margin:0 auto;padding:36px 20px}
 
+    /* HERO */
     .hero{
-      display:flex;flex-wrap:wrap;gap:28px;align-items:stretch;
-      background:var(--card);border-radius:var(--radius);
-      box-shadow:0 10px 30px rgba(0,0,0,.06);padding:28px;
-      transform:translateY(8px);opacity:0; /* will animate in */
-      will-change:transform,opacity;
+      display:grid;
+      grid-template-columns: 1fr 540px;
+      gap:28px;
+      align-items:center;
+      background:linear-gradient(180deg,#fff, #fbfdff);
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow:0 8px 30px rgba(16,24,40,0.06);
     }
 
-    /* fade-in-up */
-    .animate-in{animation:fadeInUp .6s ease forwards}
-    @keyframes fadeInUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-
-    .media{flex:1 1 520px;min-width:260px;display:flex;align-items:center;justify-content:center;position:relative}
-    .video-wrap{
-      width:100%;border-radius:12px;overflow:hidden;background:#000;aspect-ratio:16/9;position:relative;
-      box-shadow:0 10px 30px rgba(15,23,42,0.06);transition:transform .28s ease, box-shadow .28s ease;
-      transform-origin:center;
-    }
-    /* subtle pop when playing */
-    .video-wrap.playing{transform:scale(1.02);box-shadow:0 18px 40px rgba(79,70,229,.12)}
-
-    /* play overlay */
-    .play-overlay{
-      position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;
-    }
-    .play-btn{
-      pointer-events:auto;
-      width:68px;height:68px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-      background:linear-gradient(180deg,var(--primary),var(--primary-600));color:#fff;border:0;font-size:22px;
-      box-shadow:0 8px 24px rgba(79,70,229,.25);cursor:pointer;opacity:.96;transition:transform .12s ease;
-    }
-    .play-btn:active{transform:scale(.98)}
-
-    .content{flex:1 1 420px;min-width:260px}
-    .badge{display:inline-block;background:#eef2ff;color:var(--primary);padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;margin-bottom:10px}
-    h1{font-size:28px;margin:8px 0 8px;line-height:1.15}
-    .subtitle{color:var(--muted);font-size:15px;margin:6px 0 14px}
-
-    .highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:18px 0}
-    .pill{background:#f8fafc;border-radius:10px;padding:10px 12px;font-size:13px;display:flex;gap:8px;align-items:center}
-    .pill strong{color:var(--primary)}
-
-    .cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
-    .btn{padding:12px 18px;border-radius:10px;font-weight:700;display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;font-size:14px}
-    .btn-primary{background:var(--primary);color:#fff;box-shadow:0 6px 18px rgba(79,70,229,.14)}
-    .btn-primary:hover{background:var(--primary-600);transform:translateY(-2px)}
-    .btn-secondary{background:#eef2f7;color:#0f1724}
-
-    .stats{margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}
-    .stat{background:linear-gradient(180deg,var(--glass),var(--card));border-radius:12px;padding:16px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.04);transform:translateY(6px);opacity:0;transition:transform .4s ease,opacity .4s ease}
-    .stat.visible{transform:translateY(0);opacity:1}
-    .stat h3{margin:0;font-size:22px;color:var(--primary)}
-    .stat p{margin:8px 0 0;color:var(--muted);font-size:13px}
-
-    .section{margin-top:40px}
-    .section h2{font-size:20px;margin-bottom:8px}
-    .section p{color:var(--muted);margin:0 0 12px}
-
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:12px}
-    .card{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,.04);transition:transform .18s ease, box-shadow .18s ease;transform-origin:center;will-change:transform,box-shadow}
-    /* hover tilt + shadow */
-    .card:hover{transform:translateY(-8px) rotateX(2deg);box-shadow:0 18px 40px rgba(2,6,23,.06)}
-    .card h4{margin:0 0 8px;font-size:16px}
-    .list{padding-left:18px;margin:8px 0 0}
-    .list li{margin-bottom:8px;color:#374151;font-size:14px}
-
-    .outcomes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
-    .outcome{background:#ecfeff;border:1px solid #cffafe;border-radius:10px;padding:12px;font-size:14px}
-    .outcome span{color:var(--success);font-weight:700;margin-right:8px}
-
-    footer{margin-top:44px;text-align:center;color:var(--muted);font-size:13px;padding-bottom:18px}
-
-    /* Modal */
-    .modal-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);z-index:9999;padding:20px}
-    .modal-overlay.active{display:flex}
-    .modal{width:100%;max-width:560px;background:var(--card);border-radius:12px;padding:20px;box-shadow:0 12px 40px rgba(2,6,23,.35);position:relative}
-    .close-btn{position:absolute;right:12px;top:12px;border:0;background:#eef2f7;border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:16px}
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .form-grid .full{grid-column:1 / -1}
-    input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #d1d5db;font-size:14px;background:transparent}
-    button[type="submit"]{width:100%;padding:12px;border-radius:10px;border:0;background:var(--primary);color:#fff;font-weight:700;cursor:pointer;margin-top:12px}
-
-    @media (max-width:820px){
-      h1{font-size:22px}
-      .hero{padding:18px}
-      .form-grid{grid-template-columns:1fr}
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr; padding:20px}
     }
 
+    .hero-left { padding-right:6px }
+    .badge {
+      display:inline-block;background:var(--accent);color:var(--primary);padding:6px 12px;border-radius:999px;font-weight:700;font-size:13px;margin-bottom:12px;
+    }
+    h1{
+      margin:6px 0 8px;
+      font-size:30px;
+      font-weight:700;
+      letter-spacing:-0.02em;
+      color:var(--primary);
+    }
+    .lead {
+      color:var(--muted);
+      font-size:15px;
+      margin-bottom:18px;
+      max-width:60ch;
+    }
+
+    .highlights {
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .chip {
+      background:#f6f8ff;
+      color:var(--primary);
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:600;
+      font-size:13px;
+    }
+
+    .cta-row {
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .btn {
+      border:0;padding:12px 18px;border-radius:10px;font-weight:700;cursor:pointer;font-size:14px;
+      display:inline-flex;align-items:center;gap:10px;text-decoration:none;
+    }
+    .btn-primary { background:var(--primary); color:#fff; box-shadow: 0 8px 24px rgba(35,49,138,0.12) }
+    .btn-secondary { background:transparent; border:1px solid #e6eaf8; color:var(--primary); }
+
+    .trust {
+      display:flex;gap:14px;align-items:center;margin-top:12px;
+      color:var(--muted); font-size:13px;
+    }
+    .trust img{height:26px;object-fit:contain;filter:grayscale(0.03);opacity:0.95}
+
+    /* Video area */
+    .hero-right { display:flex; align-items:center; justify-content:center }
+    .video-card{
+      width:100%;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 12px 40px rgba(16,24,40,0.06);
+      background:linear-gradient(180deg,#000,#02030a);
+      position:relative;
+    }
+    .video-card iframe{width:100%;height:320px;border:0;display:block}
+    .video-overlay {
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none;
+    }
+    .play {
+      pointer-events:auto;width:72px;height:72px;border-radius:999px;background:linear-gradient(180deg,var(--primary),var(--primary-600));color:#fff;border:none;font-size:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(35,49,138,0.18);cursor:pointer;
+    }
+    .play:active{transform:scale(.98)}
+    /* small floating label */
+    .video-label {
+      position:absolute;left:14px;bottom:14px;background:rgba(255,255,255,0.92);padding:6px 10px;border-radius:999px;font-size:13px;color:var(--primary);font-weight:600;box-shadow:0 6px 20px rgba(2,6,23,0.06)
+    }
+
+    /* Sections */
+    .section { margin-top:28px }
+    .section h2 { font-size:18px;margin:0 0 8px;color:var(--primary) }
+    .two-col { display:grid; grid-template-columns: 1fr 360px; gap:20px; align-items:start }
+    @media (max-width:980px){ .two-col { grid-template-columns:1fr } }
+
+    /* Program card */
+    .program-card {
+      background:var(--card);
+      border-radius:12px;
+      padding:18px;
+      box-shadow:0 8px 26px rgba(16,24,40,0.04);
+    }
+    .program-card h3 { margin:0 0 8px; font-size:16px; color:var(--primary) }
+    .program-list{ margin:12px 0 0; padding-left:16px; }
+    .program-list li{ margin-bottom:12px; color:#28323b; line-height:1.35; font-size:14px }
+
+    /* Snapshot column */
+    .snapshot {
+      background:linear-gradient(180deg,#fbfdff,#fff);
+      border-radius:12px;padding:16px;border:1px solid #eef3ff; text-align:left;
+    }
+    .snapshot h4{ margin:0 0 6px; color:var(--primary); font-size:14px }
+    .snapshot p{ margin:6px 0 0; color:var(--muted); font-size:13px }
+
+    /* list style */
+    .feature-strong { display:block; font-weight:700; color:#0f1724; margin-bottom:6px }
+    .muted-small { color:var(--muted); font-size:13px }
+
+    /* cards grid used elsewhere */
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-top:12px }
+    .card { background:var(--card); border-radius:10px; padding:14px; box-shadow:0 6px 20px rgba(2,6,23,0.03) }
+    .card h4{ margin:0 0 10px; font-size:15px }
+
+    footer { margin-top:36px; color:var(--muted); text-align:center; font-size:13px; padding-bottom:18px }
+
+    /* accessible hidden */
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   </style>
 </head>
 <body>
-
   <div class="container">
+    <header role="banner" aria-labelledby="pageTitle">
+      <h1 id="pageTitle" class="sr-only">AI &amp; Machine Learning — Demo Class</h1>
+    </header>
 
-    <header role="banner" aria-labelledby="pageTitle"><p class="sr-only" id="pageTitle">AI & Machine Learning — Demo Class</p></header>
-
-    <main role="main" aria-labelledby="heroHeading">
+    <main role="main">
       <!-- HERO -->
-      <section class="hero hero-bg" aria-labelledby="heroHeading" id="hero">
-        <div class="media">
-          <!-- updated embed code (user-provided) wrapped for lazy init -->
-          <div class="video-wrap" id="videoWrap" aria-label="Demo class video">
-            <!-- aspect-ratio wrapper using inline padding method from user + iframe -->
-            <div style="padding:56.25% 0 0 0;position:relative;">
-              <iframe id="vimeoPlayer"
-                src="https://player.vimeo.com/video/1166890082?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                frameborder="0"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                style="position:absolute;top:0;left:0;width:100%;height:100%;"
-                title="Artificial Intelligence and Machine Learning – Demo Class"
-                loading="lazy"
-                aria-label="Artificial Intelligence and Machine Learning demo video"></iframe>
+      <section class="hero" aria-labelledby="heroHeading">
+        <div class="hero-left">
+          <span class="badge">🎓 Free Demo — 1 hour</span>
+          <h1 id="heroHeading">AI &amp; Machine Learning — Demo Class</h1>
+          <p class="lead">
+            Get a polished, outcome-first introduction to modern AI in a focused 1-hour demo. See real-world use cases, sample projects, and the career roadmap for our job-focused program.
+          </p>
+
+          <div class="highlights" aria-hidden="true">
+            <div class="chip">Hands-on demo</div>
+            <div class="chip">Live Q&A</div>
+            <div class="chip">Project preview</div>
+          </div>
+
+          <div class="cta-row">
+            <button class="btn btn-primary" id="openModalBtn" aria-haspopup="dialog">Reserve your spot</button>
+            <a class="btn btn-secondary" href="#program">See Career Program</a>
+          </div>
+
+          <div class="trust" aria-hidden="true">
+            <span style="font-weight:600;color:#374151">Trusted by</span>
+            <img src="https://d8it4huxumps7.cloudfront.net/images/partners/new_organisation_image-EH9Tx35A0c486519171Hp0E4VifCN.png" alt="Skillbotix logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkEC3tIp8vb8BI_efRIUB2DVlgjAeG2O0hiQ&s" alt="Skill India logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUcTuip7ccPyumWVI4fup0o-lMvSDVdmkfRQ&s" alt="GitHub logo">
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="video-card" role="region" aria-label="Demo video preview">
+            <!-- keep user embed; minor styling: iframe container -->
+            <iframe
+              src="https://player.vimeo.com/video/1166890082?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              title="Artificial Intelligence and Machine Learning – Demo Class"
+              loading="lazy"
+              allow="autoplay; fullscreen; picture-in-picture; encrypted-media; web-share">
+            </iframe>
+          </div>
+        </div>
+      </section>
+
+      <!-- KEY STATS -->
+      <section class="section" aria-labelledby="statsHeading">
+        <h2 id="statsHeading" class="sr-only">Key stats</h2>
+        <div class="grid" aria-hidden="true" style="margin-bottom:6px">
+          <div class="card"><h4>10+ Projects</h4><div class="muted-small">Mini projects & portfolio pieces</div></div>
+          <div class="card"><h4>Deployable Apps</h4><div class="muted-small">Streamlit/Gradio + hosting</div></div>
+          <div class="card"><h4>Agentic Capstone</h4><div class="muted-small">Real-world agentic AI build</div></div>
+          <div class="card"><h4>Placement Support</h4><div class="muted-small">Training & placement drive</div></div>
+        </div>
+      </section>
+
+      <!-- PROGRAM -->
+      <section id="program" class="section" aria-labelledby="programHeading">
+        <h2 id="programHeading" style="font-size:20px;margin:0 0 10px;color:var(--primary)">🤖 AI &amp; Machine Learning — Career Program</h2>
+        <p style="color:var(--muted);margin:0 0 14px;max-width:72ch">A job-focused, mentor-led program designed to take you from learning to earning with hands-on projects, guided mentorship, and placement backing.</p>
+
+        <div class="two-col">
+          <div class="program-card" aria-hidden="false">
+            <h3>What the program includes</h3>
+            <ul class="program-list" role="list">
+  <li>
+    <span class="feature-strong">📘 Structured Program</span>
+    A carefully designed curriculum covering AI & Machine Learning fundamentals to practical, industry-relevant skills—built to make you job-ready, not just certificate-ready.
+  </li>
+
+  <li>
+    <span class="feature-strong">👨‍🏫 12 Expert Mentor Sessions (1 per week)</span>
+    Weekly live sessions with 2 industry experts (Tech & Professional) to explain concepts, solve doubts, review progress, and share real-world use cases. This ensures consistent learning and accountability.
+  </li>
+
+  <li>
+    <span class="feature-strong">🧭 Personal Learning Manager</span>
+    You get a dedicated learning manager to track your progress, guide your journey, and keep you aligned with your career goals—so you never feel lost or stuck.
+  </li>
+
+  <li>
+    <span class="feature-strong">🌐 Private Learning Community (Exclusive Access)</span>
+    Join a focused peer & mentor community where 5–15 opportunities are shared daily—internships, projects, jobs, collaborations, and learning resources.
+  </li>
+
+  <li>
+    <span class="feature-strong">💼 1 Month Internship with ₹3,000 Stipend.</span>
+    Hands-on industry experience working on real tasks and projects, plus a stipend—so you build both experience and credibility for your resume.
+  </li>
+
+  <li>
+    <span class="feature-strong">🎯 2 Weeks Placement Training</span>
+    Intensive preparation for interviews: resume building, mock interviews, technical + HR rounds, AI interview practice, and confidence building.
+  </li>
+
+  <li>
+    <span class="feature-strong">🚀 2 Weeks Placement Drive</span>
+    Direct access to hiring opportunities with structured placement support to convert your skills into a job offer.
+  </li>
+</ul>
+
+            <div style="display:flex;gap:12px;margin-top:14px;align-items:center">
+              <a class="btn btn-primary" href="#enrol" id="enrollBtn"> Request Info</a>
+              <button class="btn btn-secondary" id="advisorBtn">Talk to an Advisor</button>
             </div>
           </div>
-        </div>
 
-        <div class="content">
-          <span class="badge">🎓 Free Demo Class</span>
-          <h1 id="heroHeading">AI &amp; Machine Learning — Demo Class</h1>
-          <p class="subtitle"> 25–30 hour Total Program Duration , <strong>hands-on, project-based</strong> learning path for students and professionals: Python → ML → Deep Learning → GenAI → RAG → Agentic AI.</p>
+          <aside>
+            <div class="snapshot" role="complementary" aria-label="Program snapshot">
+              <h4>Program Snapshot</h4>
+              <p><strong>Mentor Sessions:</strong> 12 (1 per week)</p>
+              <p><strong>Internship:</strong> 1-month live internship with ₹3,000 fixed stipend + performance-based incentives</p>
+              <p><strong>Placement Support:</strong> Training + Drive</p>
+              <p style="margin-top:12px;color:var(--muted);font-size:13px">Want this tailored for your team or campus? 
 
-          <div class="highlights">
-            <div class="pill"><strong>Duration:</strong> 1 Hours</div>
-            <div class="pill"><strong>Level:</strong> Beginner → Advanced</div>
-            <div class="pill"><strong>Mode:</strong> Hands-on, Project-Based</div>
-            <div class="pill"><strong>Outcome:</strong> 10+ Deployable Projects</div>
-          </div>
-
-          <div class="cta">
-            <button type="button" class="btn btn-primary" id="openModalBtn" aria-haspopup="dialog">Talk with us</button>
-            <a href="#syllabus" class="btn btn-secondary">View Syllabus</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- STATS -->
-      <section class="stats" aria-label="Key stats" id="statsWrap">
-        <div class="stat" data-target="10"><h3 class="count">0</h3><p>Mini AI Projects</p></div>
-        <div class="stat" data-target="5"><h3 class="count">0</h3><p>Deployable Applications</p></div>
-        <div class="stat" data-target="5"><h3 class="count">0</h3><p>Agentic AI Capstone</p></div>
-        <div class="stat" data-target="30"><h3 class="count">0</h3><p>Hours of Practical Training</p></div>
-      </section>
-
-      <!-- WHAT YOU'LL BUILD -->
-      <section class="section" aria-labelledby="buildHeading">
-        <h2 id="buildHeading">🛠️ What You’ll Build</h2>
-        <p>Every module ends with a portfolio-ready project.</p>
-
-        <div class="grid">
-          <article class="card"><h4>Python & Data Foundations</h4>
-            <ul class="list"><li>Student Grade Analyzer (Pandas)</li><li>Data handling with NumPy & Pandas</li></ul>
-          </article>
-
-          <article class="card"><h4>Machine Learning</h4>
-            <ul class="list"><li>Credit Card Risk Predictor</li><li>Customer Segmentation App</li></ul>
-          </article>
-
-          <article class="card"><h4>Deep Learning & Computer Vision</h4>
-            <ul class="list"><li>Facial Emotion Detector (CNN)</li><li>Car Number Plate Detector (OpenCV + OCR)</li></ul>
-          </article>
-
-          <article class="card"><h4>NLP, GenAI, RAG & Agents</h4>
-            <ul class="list"><li>Movie Review Sentiment Analyzer</li><li>AI Story Generator (GenAI)</li><li>AI Medical Chatbot (RAG)</li><li>Book Summarizer Agent (Agentic AI)</li></ul>
-          </article>
+            <div style="margin-top:12px;background:var(--card);border-radius:12px;padding:12px;box-shadow:0 8px 30px rgba(16,24,40,0.04);text-align:center">
+              <div style="color:var(--muted);font-size:13px">Trusted by</div>
+              <div style="display:flex;gap:10px;align-items:center;justify-content:center;margin-top:10px">
+                <img src="https://d8it4huxumps7.cloudfront.net/images/partners/new_organisation_image-EH9Tx35A0c486519171Hp0E4VifCN.png" alt="Skillbotix" style="height:28px;object-fit:contain">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkEC3tIp8vb8BI_efRIUB2DVlgjAeG2O0hiQ&s" alt="Skill India" style="height:28px;object-fit:contain">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUcTuip7ccPyumWVI4fup0o-lMvSDVdmkfRQ&s" alt="GitHub" style="height:28px;object-fit:contain">
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
 
       <!-- OUTCOMES -->
       <section class="section" aria-labelledby="outcomesHeading">
-        <h2 id="outcomesHeading">🚀 Outcomes</h2>
-        <div class="outcomes">
-          <div class="outcome"><span>✔</span> Build, train, and deploy AI models</div>
-          <div class="outcome"><span>✔</span> Master OpenCV, NLP, and Generative AI</div>
-          <div class="outcome"><span>✔</span> Create real-world AI products</div>
-          <div class="outcome"><span>✔</span> Automate workflows using no-code AI tools</div>
-          <div class="outcome"><span>✔</span> Graduate with a personal AI portfolio (GitHub + Streamlit)</div>
-        </div>
-      </section>
-
-      <!-- TECH STACK / SYLLABUS -->
-      <section class="section" id="syllabus" aria-labelledby="syllabusHeading">
-        <h2 id="syllabusHeading">🧰 Tech Stack You’ll Use</h2>
+        <h2 id="outcomesHeading" style="font-size:18px;margin-bottom:10px;color:var(--primary)">🚀 Outcomes</h2>
         <div class="grid">
-          <div class="card"><h4>Core</h4><ul class="list"><li>Python 3.11+, NumPy, Pandas</li><li>Matplotlib, Plotly</li><li>Scikit-learn</li></ul></div>
-          <div class="card"><h4>Deep Learning & CV</h4><ul class="list"><li>TensorFlow / Keras</li><li>OpenCV, EasyOCR</li></ul></div>
-          <div class="card"><h4>NLP, GenAI, RAG, Agents</h4><ul class="list"><li>spaCy, Hugging Face</li><li>OpenAI API, LangChain, FAISS</li><li>LangGraph, CrewAI</li></ul></div>
-          <div class="card"><h4>No-Code & Deployment</h4><ul class="list"><li>Streamlit, Gradio, Flask</li><li>n8n, Make.com, Zapier</li></ul></div>
-        </div>
-      </section>
-
-      <!-- BONUS -->
-      <section class="section" aria-labelledby="bonusHeading">
-        <h2 id="bonusHeading">💎 Bonus for Enrolled Learners</h2>
-        <div class="grid">
-          <div class="card"><h4>Interview Prep Kit</h4><ul class="list"><li>250+ AI/ML Interview Q&amp;As</li><li>Resume &amp; LinkedIn optimization</li><li>Mock interview templates</li></ul></div>
-          <div class="card"><h4>AWS Guidance & Live Sessions</h4><ul class="list"><li>AWS AI/ML certification roadmap</li><li>Live session on SageMaker & Bedrock</li><li>Automation tools masterclass</li></ul></div>
+          <div class="card"><h4>Build & Deploy</h4><div class="muted-small">End-to-end model development & deployment.</div></div>
+          <div class="card"><h4>Practical Skills</h4><div class="muted-small">OpenCV, NLP, GenAI, LangChain & more.</div></div>
+          <div class="card"><h4>Portfolio</h4><div class="muted-small">GitHub + live apps to showcase to employers.</div></div>
+          <div class="card"><h4>Placement Ready</h4><div class="muted-small">Interview prep, mocks & hiring access.</div></div>
         </div>
       </section>
     </main>
 
     <footer role="contentinfo">© 2026 Skillbotix. All rights reserved.</footer>
-
-    <!-- Modal: Registration -->
-    <div id="modalOverlay" class="modal-overlay" role="presentation" aria-hidden="true">
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc" tabindex="-1">
-        <button class="close-btn" id="closeModalBtn" aria-label="Close registration form">✕</button>
-        <h3 id="modalTitle">Register for call back</h3>
-        <p id="modalDesc">Fill in your details and we’ll contact you shortly.</p>
-
-        <form action="https://formsubmit.co/singlecraftservices@gmail.com" method="POST" novalidate>
-          <input type="text" name="_honey" class="sr-only" tabindex="-1" autocomplete="off" />
-          <input type="hidden" name="_subject" value="New Demo Class Registration">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_captcha" value="false">
-
-          <div class="form-grid">
-            <input required class="full" name="name" type="text" placeholder="Full name" aria-label="Full name" />
-            <input required name="email" type="email" placeholder="Email address" aria-label="Email address" />
-            <input required name="phone" type="tel" placeholder="Phone / WhatsApp" aria-label="Phone or WhatsApp number" />
-            <input name="background" type="text" placeholder="Your background (Student / Working professional)" aria-label="Your background" />
-          </div>
-
-          <button type="submit">Submit registration</button>
-        </form>
-
-        <noscript style="display:block;color:var(--muted);margin-top:12px">JavaScript is disabled — the form will still submit, but for best experience enable JavaScript.</noscript>
-      </div>
-    </div>
-
   </div>
 
-  <!-- Vimeo player API (user included this; kept as-is) -->
+  <!-- registration modal (keeps previous behavior) -->
+  <div id="modalOverlay" style="display:none;position:fixed;inset:0;background:rgba(2,6,23,0.6);align-items:center;justify-content:center;z-index:9999" aria-hidden="true">
+    <div style="background:#fff;border-radius:10px;max-width:540px;padding:18px;box-shadow:0 12px 40px rgba(2,6,23,0.25);">
+      <button id="closeModal" style="float:right;border:0;background:#eef3ff;border-radius:50%;width:36px;height:36px;cursor:pointer">✕</button>
+      <h3 style="margin:2px 0 8px;color:var(--primary)">Reserve your spot</h3>
+      <p style="color:var(--muted);margin:0 0 12px">Share your details and our advisor will contact you to confirm the demo slot.</p>
+      <form action="https://formsubmit.co/singlecraftservices@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Demo Registration">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <input required name="name" placeholder="Full name" style="padding:10px;border-radius:8px;border:1px solid #e6eaf8">
+          <input required name="email" type="email" placeholder="Email" style="padding:10px;border-radius:8px;border:1px solid #e6eaf8">
+          <input required name="phone" placeholder="Phone / WhatsApp" style="padding:10px;border-radius:8px;border:1px solid #e6eaf8">
+          <input name="background" placeholder="Student / Working professional" style="padding:10px;border-radius:8px;border:1px solid #e6eaf8">
+        </div>
+        <button type="submit" style="margin-top:12px;padding:12px 16px;border-radius:8px;border:0;background:var(--primary);color:#fff;font-weight:700">Request demo</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- vimeo api kept -->
   <script src="https://player.vimeo.com/api/player.js"></script>
-
   <script>
-    /* ---------- UI: initial entrance ---------- */
-    document.addEventListener('DOMContentLoaded', function () {
-      const hero = document.getElementById('hero');
-      // small delayed entrance
-      setTimeout(() => hero.classList.add('animate-in'), 80);
+    // basic UI interactions
+    (function(){
+      const openModalBtn = document.getElementById('openModalBtn');
+      const advisorBtn = document.getElementById('advisorBtn');
+      const enrollBtn = document.getElementById('enrollBtn');
+      const modal = document.getElementById('modalOverlay');
+      const closeModal = document.getElementById('closeModal');
 
-      // animate stats when visible & animate cards
-      const statEls = document.querySelectorAll('.stat');
-      const statObserver = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            obs.unobserve(entry.target);
+      function showModal(){ modal.style.display='flex'; modal.setAttribute('aria-hidden','false'); }
+      function hideModal(){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); }
+
+      if(openModalBtn) openModalBtn.addEventListener('click', showModal);
+      if(advisorBtn) advisorBtn.addEventListener('click', showModal);
+      if(enrollBtn) enrollBtn.addEventListener('click', showModal);
+      if(closeModal) closeModal.addEventListener('click', hideModal);
+      if(modal) modal.addEventListener('click', function(e){ if(e.target === modal) hideModal(); });
+
+      // play preview button (UI only)
+      const play = document.getElementById('playPreview');
+      if(play){
+        play.addEventListener('click', function(){
+          // focus on iframe (let Vimeo handle playback); present visual feedback by toggling a class if needed
+          const iframe = document.querySelector('.video-card iframe');
+          if(iframe){
+            try {
+              const player = new Vimeo.Player(iframe);
+              player.play().catch(()=>{/* ignore autoplay block */});
+            } catch(e){ /* no-op */ }
           }
         });
-      }, {threshold: 0.25});
-      statEls.forEach(el => statObserver.observe(el));
-
-      // animate card reveal
-      const cards = document.querySelectorAll('.card');
-      const cardObserver = new IntersectionObserver((entries, obs) => {
-        entries.forEach((entry, i) => {
-          if (entry.isIntersecting) {
-            entry.target.style.transitionDelay = (i * 60) + 'ms';
-            entry.target.classList.add('animate-in');
-            obs.unobserve(entry.target);
-          }
-        });
-      }, {threshold: 0.12});
-      cards.forEach(c => cardObserver.observe(c));
-
-
-      /* ---------- counter animation ---------- */
-      const counters = document.querySelectorAll('.stat .count');
-      const counterObserver = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const el = entry.target;
-            const parent = el.closest('.stat');
-            const target = parseInt(parent.getAttribute('data-target'), 10) || 0;
-            animateCount(el, target, 900);
-            obs.unobserve(entry.target);
-          }
-        });
-      }, {threshold: 0.6});
-
-      counters.forEach(c => counterObserver.observe(c));
-    });
-
-    function animateCount(el, target, duration) {
-      let start = 0;
-      const startTime = performance.now();
-      function step(now) {
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const value = Math.floor(progress * (target - start) + start);
-        el.textContent = value;
-        if (progress < 1) requestAnimationFrame(step);
-        else {
-          // append + for the first stat to preserve "10+" look
-          const parent = el.closest('.stat');
-          if (parent && parent.getAttribute('data-target') === '10') el.textContent = value + '+';
-        }
       }
-      requestAnimationFrame(step);
-    }
-
-    /* ---------- Modal accessibility + focus trap (kept + improved) ---------- */
-    (function () {
-      const openBtn = document.getElementById('openModalBtn');
-      const overlay = document.getElementById('modalOverlay');
-      const modal = overlay.querySelector('.modal');
-      const closeBtn = document.getElementById('closeModalBtn');
-      let lastFocused = null;
-
-      function getFocusable(el = modal) {
-        return Array.from(el.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'))
-          .filter(node => node.offsetParent !== null);
-      }
-      function openModal() {
-        lastFocused = document.activeElement;
-        overlay.classList.add('active');
-        overlay.setAttribute('aria-hidden', 'false');
-        modal.focus();
-        const focusable = getFocusable();
-        if (focusable.length) focusable[0].focus();
-        document.addEventListener('keydown', handleKeydown);
-      }
-      function closeModal() {
-        overlay.classList.remove('active');
-        overlay.setAttribute('aria-hidden', 'true');
-        if (lastFocused) lastFocused.focus();
-        document.removeEventListener('keydown', handleKeydown);
-      }
-      function handleKeydown(e) {
-        if (e.key === 'Escape') { closeModal(); return; }
-        if (e.key === 'Tab') {
-          const focusable = getFocusable();
-          if (!focusable.length) { e.preventDefault(); return; }
-          const idx = focusable.indexOf(document.activeElement);
-          if (e.shiftKey && idx === 0) { focusable[focusable.length - 1].focus(); e.preventDefault(); }
-          else if (!e.shiftKey && idx === focusable.length - 1) { focusable[0].focus(); e.preventDefault(); }
-        }
-      }
-      openBtn.addEventListener('click', openModal);
-      closeBtn.addEventListener('click', closeModal);
-      overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
-      openBtn.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); }});
-    })();
-
-    /* ---------- Vimeo Player integration & UI interactions ---------- */
-    (function () {
-      const iframe = document.getElementById('vimeoPlayer');
-      if (!iframe) return;
-
-      // Use Vimeo Player API (player.js loaded above)
-      const player = new Vimeo.Player(iframe);
-      const playBtn = document.getElementById('playButton');
-      const videoWrap = document.getElementById('videoWrap');
-
-      // toggle UI state when playing/paused
-      player.on('play', function () { videoWrap.classList.add('playing'); });
-      player.on('pause', function () { videoWrap.classList.remove('playing'); });
-      player.on('ended', function () { videoWrap.classList.remove('playing'); });
-
-      // clicking big play button toggles play/pause
-      playBtn.addEventListener('click', async function () {
-        try {
-          const paused = await player.getPaused();
-          if (paused) player.play();
-          else player.pause();
-        } catch (err) { console.warn('Vimeo play error', err); }
-      });
-
-      // hover: show play button (pointer events handled)
-      videoWrap.addEventListener('mouseenter', () => { playBtn.style.opacity = '1'; });
-      videoWrap.addEventListener('mouseleave', () => { playBtn.style.opacity = '0.98'; });
-
-      // lazy: only load heavier player features when user interacts with video for the first time
-      // (player.js already loaded; this is a light optimization hook — you can extend to load analytics)
     })();
   </script>
 </body>
