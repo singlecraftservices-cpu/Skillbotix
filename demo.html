@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --primary: #23318a; /* more professional navy */
+      --primary: #23318a;
       --primary-600: #1b2566;
       --accent: #eef3ff;
       --bg: #fbfcfe;
@@ -18,13 +18,15 @@
       --success: #0f9d58;
       --radius: 12px;
       --container: 1180px;
+      --glass: rgba(255,255,255,0.6);
+      --glass-2: rgba(246,248,255,0.8);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
       font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-      background:var(--bg);
+      background:linear-gradient(180deg,var(--bg),#fcfdff);
       color:var(--text);
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
@@ -112,7 +114,10 @@
       box-shadow:0 12px 40px rgba(16,24,40,0.06);
       background:linear-gradient(180deg,#000,#02030a);
       position:relative;
+      transform-style:preserve-3d;
+      transition:transform .36s cubic-bezier(.2,.9,.3,1);
     }
+    .video-card:hover{ transform:translateY(-6px) rotateX(.6deg) }
     .video-card iframe{width:100%;height:320px;border:0;display:block}
     .video-overlay {
       position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none;
@@ -121,7 +126,6 @@
       pointer-events:auto;width:72px;height:72px;border-radius:999px;background:linear-gradient(180deg,var(--primary),var(--primary-600));color:#fff;border:none;font-size:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(35,49,138,0.18);cursor:pointer;
     }
     .play:active{transform:scale(.98)}
-    /* small floating label */
     .video-label {
       position:absolute;left:14px;bottom:14px;background:rgba(255,255,255,0.92);padding:6px 10px;border-radius:999px;font-size:13px;color:var(--primary);font-weight:600;box-shadow:0 6px 20px rgba(2,6,23,0.06)
     }
@@ -138,7 +142,9 @@
       border-radius:12px;
       padding:18px;
       box-shadow:0 8px 26px rgba(16,24,40,0.04);
+      transition:box-shadow .24s ease, transform .28s ease;
     }
+    .program-card:hover{ transform:translateY(-6px); box-shadow:0 16px 40px rgba(16,24,40,0.08) }
     .program-card h3 { margin:0 0 8px; font-size:16px; color:var(--primary) }
     .program-list{ margin:12px 0 0; padding-left:16px; }
     .program-list li{ margin-bottom:12px; color:#28323b; line-height:1.35; font-size:14px }
@@ -157,13 +163,101 @@
 
     /* cards grid used elsewhere */
     .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-top:12px }
-    .card { background:var(--card); border-radius:10px; padding:14px; box-shadow:0 6px 20px rgba(2,6,23,0.03) }
+    .card { background:var(--card); border-radius:10px; padding:14px; box-shadow:0 6px 20px rgba(2,6,23,0.03); transition:transform .28s ease, box-shadow .28s ease; will-change:transform,opacity; }
+    .card:hover{ transform:translateY(-6px); box-shadow:0 14px 40px rgba(2,6,23,0.06) }
     .card h4{ margin:0 0 10px; font-size:15px }
 
     footer { margin-top:36px; color:var(--muted); text-align:center; font-size:13px; padding-bottom:18px }
 
-    /* accessible hidden */
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+    /* ========== Accordion (compact animated panels) ========== */
+    .accordion { margin-top:14px; border-radius:10px; overflow:hidden; border:1px solid #eef3ff; background:linear-gradient(180deg,#fff,#fbfdff) }
+    .accordion-item { border-bottom:1px solid #f1f5ff; }
+    .accordion-button {
+      display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer;background:transparent;border:0;width:100%;
+      font-weight:700;color:var(--primary);font-size:14px;
+    }
+    .accordion-button:hover { background:rgba(35,49,138,0.03) }
+    .accordion-button .label { display:flex;gap:10px;align-items:center }
+    .chev { transition: transform .28s ease; transform-origin:50% 50%; font-size:14px;color:var(--muted) }
+    .accordion-panel { max-height:0; overflow:hidden; transition: max-height .36s cubic-bezier(.2,.8,.2,1), padding .28s ease; padding:0 14px; background:transparent }
+    .accordion-panel.open { padding:12px 14px 16px }
+    .mini-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px }
+    .chip-compact { background:#f6f8ff;border-radius:8px;padding:8px 10px;font-size:13px;color:var(--primary);display:inline-block }
+    .list-compact { margin:0;padding-left:14px;color:#28323b;font-size:14px }
+    .list-compact li { margin:6px 0 }
+
+    /* rotate when open */
+    .accordion-button[aria-expanded="true"] .chev { transform:rotate(180deg) }
+
+    @media (max-width:700px){
+      .mini-grid { grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); }
+    }
+
+    /* ========== Topic/Tool/Project card transformation (no markup change) ========== */
+    /* convert list items into inline card chips inside the panel */
+    .accordion-panel .list-compact {
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      padding:8px 0;
+      margin:0;
+      list-style:none;
+    }
+    .accordion-panel .list-compact li {
+      min-width:180px;
+      max-width:280px;
+      background:linear-gradient(180deg, #fff, var(--glass-2));
+      border-radius:12px;
+      padding:12px 14px;
+      box-shadow:0 8px 24px rgba(16,24,40,0.04);
+      transition:transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s ease, opacity .36s ease;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      font-size:13px;
+      color:#1f2937;
+      scroll-snap-align:center;
+    }
+    .accordion-panel .list-compact li strong{ color:var(--primary); font-weight:700; font-size:13px }
+
+    /* horizontal scroll container for small viewports */
+    .scroll-wrap {
+      display:flex;
+      gap:12px;
+      overflow-x:auto;
+      padding:6px 4px;
+      -webkit-overflow-scrolling:touch;
+      scroll-snap-type:x mandatory;
+      scrollbar-width:thin;
+    }
+    .scroll-wrap::-webkit-scrollbar{height:9px}
+    .scroll-wrap::-webkit-scrollbar-thumb{background:#e6eaf8;border-radius:999px}
+    .scroll-wrap::-webkit-scrollbar-track{background:transparent}
+
+    /* subtle entrance animation */
+    @keyframes floatUp {
+      from{ transform:translateY(10px); opacity:0 }
+      to{ transform:translateY(0); opacity:1 }
+    }
+    .reveal { animation: floatUp .52s cubic-bezier(.2,.9,.3,1) both; }
+
+    /* small control arrows (appear when hover/active on the panel) */
+    .scroll-controls { display:flex; gap:8px; align-items:center; position:relative; margin-top:8px; }
+    .scroll-arrow {
+      display:inline-flex;align-items:center;justify-content:center;
+      width:36px;height:36px;border-radius:10px;border:1px solid #eef3ff;background:var(--card);cursor:pointer;box-shadow:0 6px 18px rgba(2,6,23,0.03);
+    }
+    .scroll-arrow:active{ transform:translateY(1px) }
+    .scroll-arrow svg{ width:14px;height:14px; color:var(--primary) }
+
+    /* responsive improvements */
+    @media (max-width:680px){
+      .accordion-panel .list-compact li { min-width:240px; max-width:260px; }
+      .hero-right .video-card iframe{height:220px}
+    }
+
   </style>
 </head>
 <body>
@@ -203,7 +297,6 @@
 
         <div class="hero-right">
           <div class="video-card" role="region" aria-label="Demo video preview">
-            <!-- keep user embed; minor styling: iframe container -->
             <iframe
               src="https://player.vimeo.com/video/1166890082?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
               title="Artificial Intelligence and Machine Learning – Demo Class"
@@ -270,6 +363,101 @@
   </li>
 </ul>
 
+            <!-- ======= Compact accordion with Topics / Tools / Projects ======= -->
+            <div class="accordion" id="programAccordion" aria-hidden="false" style="margin-top:14px">
+              <!-- Topics -->
+              <div class="accordion-item">
+                <button class="accordion-button" aria-expanded="false" aria-controls="panel-topics" id="btn-topics">
+                  <span class="label">📚 Program Topics (13 modules)</span>
+                  <span class="chev">▾</span>
+                </button>
+                <div id="panel-topics" class="accordion-panel" role="region" aria-labelledby="btn-topics">
+                  <div class="mini-grid">
+                    <div>
+                      <ul class="list-compact">
+                        <li><strong>Module 1:</strong> Python for AI Foundations</li>
+                        <li><strong>Module 2:</strong> Data Analysis & Supervised Learning</li>
+                        <li><strong>Module 3:</strong> EDA & Unsupervised Learning (Customer Segmentation)</li>
+                        <li><strong>Module 4:</strong> Deep Learning for Images</li>
+                        <li><strong>Module 5:</strong> Computer Vision + OpenCV</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <ul class="list-compact">
+                        <li><strong>Module 6:</strong> NLP Fundamentals</li>
+                        <li><strong>Module 7:</strong> Generative AI Fundamentals</li>
+                        <li><strong>Module 8:</strong> Retrieval-Augmented Generation (RAG)</li>
+                        <li><strong>Module 9:</strong> Agentic AI</li>
+                        <li><strong>Module 10–12:</strong> No-Code Tools (AI Coding, App Dev, Agent Automation)</li>
+                        <li><strong>Module 13:</strong> Bonus Lecture</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- scroll controls for discoverability -->
+                  <div class="scroll-controls" aria-hidden="true" data-panel="panel-topics"></div>
+                </div>
+              </div>
+
+              <!-- Tools -->
+              <div class="accordion-item">
+                <button class="accordion-button" aria-expanded="false" aria-controls="panel-tools" id="btn-tools">
+                  <span class="label">🧰 Tools (selected)</span>
+                  <span class="chev">▾</span>
+                </button>
+                <div id="panel-tools" class="accordion-panel" role="region" aria-labelledby="btn-tools">
+                  <div class="mini-grid">
+                    <div>
+                      <div class="chip-compact">Python 3.11+</div>
+                      <div class="chip-compact">Google Colab</div>
+                      <div class="chip-compact">Jupyter</div>
+                      <div class="chip-compact">NumPy / Pandas</div>
+                      <div class="chip-compact">Matplotlib / Seaborn</div>
+                    </div>
+                    <div>
+                      <div class="chip-compact">scikit-learn / XGBoost / LightGBM</div>
+                      <div class="chip-compact">TensorFlow / OpenCV</div>
+                      <div class="chip-compact">OpenAI API / LangChain / FAISS</div>
+                      <div class="chip-compact">Streamlit / Gradio / Flask</div>
+                      <div class="chip-compact">No-code: Teachable Machine, Glide, AutoML</div>
+                    </div>
+                  </div>
+                  <div class="scroll-controls" aria-hidden="true" data-panel="panel-tools"></div>
+                </div>
+              </div>
+
+              <!-- Projects -->
+              <div class="accordion-item">
+                <button class="accordion-button" aria-expanded="false" aria-controls="panel-projects" id="btn-projects">
+                  <span class="label">🧩 Projects (high-impact)</span>
+                  <span class="chev">▾</span>
+                </button>
+                <div id="panel-projects" class="accordion-panel" role="region" aria-labelledby="btn-projects">
+                  <div class="mini-grid">
+                    <div>
+                      <ul class="list-compact">
+                        <li>Project 1: Student Grade Analyzer</li>
+                        <li>Project 2: Credit Card Risk Predictor</li>
+                        <li>Project 3: Customer Segmentation App</li>
+                        <li>Project 4: Facial Emotion Detector</li>
+                        <li>Project 5: Car Number Plate Detector</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <ul class="list-compact">
+                        <li>Project 6: Movie Review Sentiment Analyzer</li>
+                        <li>Project 7: AI Story Generator</li>
+                        <li>Project 8: AI Medical Chatbot</li>
+                        <li>Project 9: Book Summarizer Agent</li>
+                        <li>Project 10–12: Churn Predictor (No-Code), AI Dashboard, Email Auto-Responder Agent</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="scroll-controls" aria-hidden="true" data-panel="panel-projects"></div>
+                </div>
+              </div>
+            </div>
+            <!-- ======= end accordion ======= -->
+
             <div style="display:flex;gap:12px;margin-top:14px;align-items:center">
               <a class="btn btn-primary" href="#enrol" id="enrollBtn"> Request Info</a>
               <button class="btn btn-secondary" id="advisorBtn">Talk to an Advisor</button>
@@ -333,7 +521,7 @@
   <!-- vimeo api kept -->
   <script src="https://player.vimeo.com/api/player.js"></script>
   <script>
-    // basic UI interactions
+    // basic UI interactions + accordion + card scroll enhancements
     (function(){
       const openModalBtn = document.getElementById('openModalBtn');
       const advisorBtn = document.getElementById('advisorBtn');
@@ -354,7 +542,6 @@
       const play = document.getElementById('playPreview');
       if(play){
         play.addEventListener('click', function(){
-          // focus on iframe (let Vimeo handle playback); present visual feedback by toggling a class if needed
           const iframe = document.querySelector('.video-card iframe');
           if(iframe){
             try {
@@ -364,6 +551,139 @@
           }
         });
       }
+
+      // Accordion behavior (smooth expand/collapse)
+      function setupAccordion(containerId) {
+        const container = document.getElementById(containerId);
+        if(!container) return;
+        const buttons = container.querySelectorAll('.accordion-button');
+        buttons.forEach(btn => {
+          const panelId = btn.getAttribute('aria-controls');
+          const panel = document.getElementById(panelId);
+          btn.addEventListener('click', function(){
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            // close all siblings (optional: allow multiple open by removing this block)
+            const allButtons = container.querySelectorAll('.accordion-button');
+            const allPanels = container.querySelectorAll('.accordion-panel');
+            allButtons.forEach(b => b.setAttribute('aria-expanded','false'));
+            allPanels.forEach(p => {
+              p.style.maxHeight = null;
+              p.classList.remove('open');
+            });
+
+            if(!expanded){
+              btn.setAttribute('aria-expanded','true');
+              panel.classList.add('open');
+              // ensure lists become horizontally scrollable on small screens
+              panel.style.maxHeight = panel.scrollHeight + "px";
+              // add reveal animation to immediate child cards
+              const revealItems = panel.querySelectorAll('.list-compact li, .chip-compact');
+              revealItems.forEach((it,i) => {
+                it.classList.remove('reveal');
+                // small delay for cascading effect
+                setTimeout(()=> it.classList.add('reveal'), 60 * i);
+              });
+            } else {
+              btn.setAttribute('aria-expanded','false');
+              panel.style.maxHeight = null;
+              panel.classList.remove('open');
+            }
+          });
+          // keyboard toggle
+          btn.addEventListener('keydown', function(e){
+            if(e.key === 'Enter' || e.key === ' '){
+              e.preventDefault();
+              btn.click();
+            }
+          });
+        });
+        // set initial heights to zero (collapsed)
+        const allPanels = container.querySelectorAll('.accordion-panel');
+        allPanels.forEach(p => p.style.maxHeight = null);
+      }
+
+      // initialize the accordion
+      setupAccordion('programAccordion');
+
+      // Recalculate maxHeight when window resizes (keeps animation smooth)
+      window.addEventListener('resize', function(){
+        const openPanels = document.querySelectorAll('.accordion-panel.open');
+        openPanels.forEach(p => {
+          p.style.maxHeight = p.scrollHeight + 'px';
+        });
+      });
+
+      // Enhance panels: create horizontal scroll wrappers and arrow controls
+      function enhancePanels() {
+        const panels = document.querySelectorAll('.accordion-panel');
+        panels.forEach(panel => {
+          // find lists and chips inside panel and wrap them in .scroll-wrap (if not already)
+          const lists = panel.querySelectorAll('.list-compact');
+          lists.forEach(list => {
+            // transform list into scrollable row
+            if(!list.classList.contains('scroll-wrap')) {
+              list.classList.add('scroll-wrap');
+              list.setAttribute('tabindex','0');
+              // enable keyboard scrolling
+              list.addEventListener('keyup', (e) => {
+                if(e.key === 'ArrowRight') list.scrollBy({left:220, behavior:'smooth'});
+                if(e.key === 'ArrowLeft') list.scrollBy({left:-220, behavior:'smooth'});
+              });
+            }
+            // apply progressive reveal classes to child items
+            const items = list.querySelectorAll('li');
+            items.forEach((it) => it.classList.add('reveal'));
+          });
+
+          // groups of chips (tools) - convert those container children into a single scroll-wrap container
+          const chips = panel.querySelectorAll('.chip-compact');
+          if(chips.length){
+            // create wrapper only once
+            const firstChip = chips[0];
+            const parent = firstChip.parentElement;
+            if(parent && !parent.classList.contains('scroll-wrap')) {
+              parent.classList.add('scroll-wrap');
+              parent.setAttribute('tabindex','0');
+              parent.style.alignItems = 'center';
+            }
+            chips.forEach(c => c.classList.add('reveal'));
+          }
+
+          // add arrow controls adjacent to the panel (discoverability)
+          const controlsPlaceholder = panel.parentElement.querySelector('.scroll-controls[data-panel="'+panel.id+'"]');
+          if(controlsPlaceholder && !controlsPlaceholder.dataset.inited) {
+            const left = document.createElement('button');
+            left.className = 'scroll-arrow';
+            left.setAttribute('aria-label','Scroll left');
+            left.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>';
+            const right = document.createElement('button');
+            right.className = 'scroll-arrow';
+            right.setAttribute('aria-label','Scroll right');
+            right.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>';
+
+            // attach simple scroll behavior to nearest scroll-wrap(s)
+            right.addEventListener('click', () => {
+              // find first scroll-wrap within the same panel and scroll it
+              const target = panel.querySelector('.scroll-wrap');
+              if(target) target.scrollBy({left:320, behavior:'smooth'});
+            });
+            left.addEventListener('click', () => {
+              const target = panel.querySelector('.scroll-wrap');
+              if(target) target.scrollBy({left:-320, behavior:'smooth'});
+            });
+
+            controlsPlaceholder.appendChild(left);
+            controlsPlaceholder.appendChild(right);
+            controlsPlaceholder.dataset.inited = '1';
+          }
+        });
+      }
+
+      // run enhancement after DOM ready
+      document.addEventListener('DOMContentLoaded', enhancePanels);
+      // also run after a short delay to be safe on slower devices
+      setTimeout(enhancePanels, 300);
+
     })();
   </script>
 </body>
